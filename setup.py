@@ -32,6 +32,7 @@ setup(
             "flake8-print>=3.1.0",
         ],
         test=[
+            "coverage>=4.5.3",
             "nose>=1.3.7",
             "PyHamcrest>=1.9.0",
         ],

@@ -2,19 +2,34 @@ from textwrap import dedent
 
 from hamcrest import assert_that, equal_to, is_
 
-from pluscal.ast import Algorithm, Id, Print
+from pluscal.api import Algorithm, Print, Variable
 
 
-def test_hello_world():
-    ast = Algorithm(
-        id=Id("HelloWorld"),
-        statement=Print("Hello, world."),
+ALGORITHM = dedent("""\
+    --algorithm hello_world
+    variable s \\in {"Hello", "World!"};
+    begin
+      A:
+        print s;
+    end algorithm""")
+
+
+def test_hello_world() -> None:
+    """
+    Validate hello world algorithm.
+
+    See: https://learntla.com/pluscal/a-simple-spec/
+
+    """
+    algorithm = Algorithm(
+        "hello_world",
+    ).vars(
+        Variable("s", ["Hello", "World!"]),
+    ).do(
+        Print("s", label="A"),
     )
+
     assert_that(
-        str(ast),
-        is_(equal_to(dedent("""\
-            --algorithm HelloWorld
-            begin print "Hello, world."
-            end algorithm
-        """))),
+        str(algorithm),
+        is_(equal_to(ALGORITHM)),
     )
