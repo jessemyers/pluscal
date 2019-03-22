@@ -21,6 +21,7 @@ setup(
     ],
     extras_require=dict(
         dist=[
+            "bumpversion>=0.5.3",
             "pip>=19.0.3",
             "setuptools>=40.8.0",
             "twine>=1.13.0",
