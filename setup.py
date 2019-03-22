@@ -20,6 +20,11 @@ setup(
     install_requires=[
     ],
     extras_require=dict(
+        dist=[
+            "pip>=19.0.3",
+            "setuptools>=40.8.0",
+            "twine>=1.13.0",
+        ],
         lint=[
             "flake8>=3.7.7",
             "flake8-isort>=2.7.0",
