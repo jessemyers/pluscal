@@ -1,6 +1,6 @@
 from hamcrest import assert_that, equal_to, is_
 
-from pluscal.builder.await_ import AwaitBuilder
+from pluscal.builders.await_ import AwaitBuilder
 
 
 class TestAwaitBuilder:

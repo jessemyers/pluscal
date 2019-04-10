@@ -20,7 +20,10 @@ class Builder(Generic[T]):
     @property
     def ast(self) -> T:
         ast = self.build()
-        ast.validate()
+
+        if ast:
+            ast.validate()
+
         return ast
 
     def __str__(self) -> str:

@@ -5,7 +5,7 @@ from hamcrest import assert_that, equal_to, is_
 from pluscal.ast.base import Expr, Label, Name, Variable
 from pluscal.ast.process import Process
 from pluscal.ast.statements import AlgorithmBody, Skip, Stmt, While
-from pluscal.ast.variables import DeclType, VarDecl, VarDecls
+from pluscal.ast.variable import DeclType, VarDecl, VarDecls
 
 
 def test_process() -> None:

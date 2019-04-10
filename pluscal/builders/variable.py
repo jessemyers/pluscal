@@ -2,8 +2,8 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Union
 
 from pluscal.ast import DeclType, Expr, VarDecl, VarDecls, Variable
-from pluscal.builder.base import Builder
-from pluscal.builder.sources import VariableSource, to_variable
+from pluscal.builders.base import Builder
+from pluscal.builders.source import VariableSource, to_variable
 
 
 def quote(s: str) -> str:
@@ -47,7 +47,7 @@ class VariableBuilder(Builder[VarDecl]):
 
 
 @dataclass
-class VariablesBuilder:
+class VariablesBuilder(Builder[Optional[VarDecls]]):
     items: List[VarDecl] = field(default_factory=list)
 
     def build(self) -> Optional[VarDecls]:

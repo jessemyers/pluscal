@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Iterable, Sequence
 
 from pluscal.ast.base import Base, Line, Name, Variable
@@ -27,8 +27,20 @@ class Macro(Base):
     def validate(self) -> None:
         self.name.validate()
 
-        assert self.args
         for arg in self.args:
             arg.validate()
 
         self.body.validate()
+
+
+@dataclass(frozen=True)
+class Macros(Base):
+    items: Sequence[Macro] = field(default_factory=tuple)
+
+    def render(self, indent: int = 0) -> Iterable[Line]:
+        for item in self.items:
+            yield from item.render(indent)
+
+    def validate(self) -> None:
+        for item in self.items:
+            item.validate()

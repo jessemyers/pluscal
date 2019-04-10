@@ -3,7 +3,7 @@ from textwrap import dedent
 from hamcrest import assert_that, equal_to, is_
 
 from pluscal.ast import Skip
-from pluscal.builder.either import EitherBuilder
+from pluscal.builders.either import EitherBuilder
 
 
 class TestEitherBuilder:

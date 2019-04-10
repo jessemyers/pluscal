@@ -4,7 +4,7 @@ from hamcrest import assert_that, equal_to, is_
 
 from pluscal.ast.base import Expr, Variable
 from pluscal.ast.statements import Print, Stmt, With
-from pluscal.ast.variables import DeclType, VarDecl
+from pluscal.ast.variable import DeclType, VarDecl
 
 
 def test_with() -> None:

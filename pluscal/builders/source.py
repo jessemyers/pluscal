@@ -1,15 +1,27 @@
 from typing import Optional, Union
 
-from pluscal.ast import LHS, Label, Stmt, UnlabeledStmt, VarDecl, Variable
-from pluscal.builder.base import Builder
+from pluscal.ast import (
+    LHS,
+    Label,
+    Macro,
+    Procedure,
+    Process,
+    PVarDecl,
+    Stmt,
+    UnlabeledStmt,
+    VarDecl,
+    Variable,
+)
+from pluscal.builders.base import Builder
 
 
 LabelSource = Optional[Union[Label, str]]
-
 LHSSource = Union[Builder[LHS], LHS, str]
-
+MacroSource = Union[Builder[Macro], Macro]
+ProcedureSource = Union[Builder[Procedure], Procedure]
+ProcessSource = Union[Builder[Process], Process]
+PVariableSource = Union[Builder[PVarDecl], PVarDecl]
 StatementSource = Union[Builder[Stmt], Stmt, UnlabeledStmt]
-
 VariableSource = Union[Builder[VarDecl], VarDecl, Variable, str]
 
 
@@ -29,6 +41,34 @@ def to_lhs(value: LHSSource) -> LHS:
         return value.build()
     else:
         return LHS(Variable(value))
+
+
+def to_macro(value: MacroSource) -> Macro:
+    if isinstance(value, Builder):
+        return value.build()
+    else:
+        return value
+
+
+def to_procedure(value: ProcedureSource) -> Procedure:
+    if isinstance(value, Builder):
+        return value.build()
+    else:
+        return value
+
+
+def to_process(value: ProcessSource) -> Process:
+    if isinstance(value, Builder):
+        return value.build()
+    else:
+        return value
+
+
+def to_pvariable(value: PVariableSource) -> PVarDecl:
+    if isinstance(value, Builder):
+        return value.build()
+    else:
+        return value
 
 
 def to_statement(value: StatementSource) -> Stmt:

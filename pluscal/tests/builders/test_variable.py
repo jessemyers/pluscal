@@ -1,6 +1,6 @@
 from hamcrest import assert_that, equal_to, is_
 
-from pluscal.builder.variable import VariableBuilder
+from pluscal.builders.variable import VariableBuilder
 
 
 def test_name():

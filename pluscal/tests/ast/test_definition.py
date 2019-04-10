@@ -2,7 +2,7 @@ from textwrap import dedent
 
 from hamcrest import assert_that, equal_to, is_
 
-from pluscal.ast.definitions import Def, Definitions
+from pluscal.ast.definition import Def, Definitions
 
 
 def test_definitions() -> None:
