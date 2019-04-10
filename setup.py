@@ -3,20 +3,35 @@ from setuptools import find_packages, setup
 
 
 project = "pluscal"
-version = "0.1.0"
+version = "0.2.0"
+
+
+url = "https://github.com/jessemyers/pluscal"
+long_description = f"See {url}"
+try:
+    with open("README.md") as file_:
+        long_description = file_.read()
+except IOError:
+    pass
 
 
 setup(
     name=project,
     version=version,
+    license="Apache 2.0",
     description="PlusCal AST and builder in Python",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Jesse Myers",
-    url="https://github.com/jessemyers/pluscal",
+    url=url,
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     include_package_data=True,
     zip_safe=False,
     python_requires=">=3.7",
-    keywords="PlusCal",
+    keywords="PlusCal TLA+",
+    classifiers=[
+        "Programming Language :: Python :: 3.7",
+    ],
     install_requires=[
     ],
     extras_require=dict(
@@ -32,6 +47,7 @@ setup(
             "flake8-print>=3.1.0",
         ],
         test=[
+            "coverage>=4.5.3",
             "nose>=1.3.7",
             "PyHamcrest>=1.9.0",
         ],
