@@ -1,36 +1,29 @@
 from dataclasses import dataclass, field
-from typing import Callable, List
 
-from pluscal.ast import Algorithm, AlgorithmBody, Name, Stmt, VarDecl, VarDecls
-from pluscal.builder.variable import VariableBuilder
+from pluscal.ast import Algorithm, Name
+from pluscal.builder.base import Builder
+from pluscal.builder.body import BodyBuilder
+from pluscal.builder.sources import StatementSource, VariableSource
+from pluscal.builder.variable import VariablesBuilder
 
 
-@dataclass(frozen=True)
-class AlgorithmBuilder:
+@dataclass
+class AlgorithmBuilder(Builder[Algorithm]):
     name: str
-    statements: List[Stmt] = field(default_factory=list)
-    variables: List[VarDecl] = field(default_factory=list)
+    variables: VariablesBuilder = field(default_factory=VariablesBuilder)
+    body: BodyBuilder = field(default_factory=BodyBuilder)
 
-    def __call__(self) -> Algorithm:
+    def build(self) -> Algorithm:
         return Algorithm(
             name=Name(self.name),
-            variables=VarDecls(
-                items=self.variables,
-            ) if self.variables else None,
-            body=AlgorithmBody(
-                items=self.statements,
-            ),
+            variables=self.variables.build(),
+            body=self.body.build(),
         )
 
-    def __str__(self) -> str:
-        ast = self()
-        ast.validate()
-        return str(ast)
-
-    def do(self, *args: Callable[[], Stmt]) -> "AlgorithmBuilder":
-        self.statements.extend(func() for func in args)
+    def declare(self, *args: VariableSource) -> "AlgorithmBuilder":
+        self.variables.declare(*args)
         return self
 
-    def vars(self, *args: VariableBuilder) -> "AlgorithmBuilder":
-        self.variables.extend(func() for func in args)
+    def do(self, *args: StatementSource) -> "AlgorithmBuilder":
+        self.body.do(*args)
         return self

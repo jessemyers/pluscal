@@ -27,12 +27,12 @@ def test_euclid() -> None:
 
     """
     algorithm = Algorithm(
-        name="EuclidSedgewick",
-    ).vars(
-        Variable("m", (1, "K")),
-        Variable("n", (1, "K")),
-        Variable("u", "m"),
-        Variable("v", "n"),
+        "EuclidSedgewick",
+    ).declare(
+        Variable("m").in_range(1, "K"),
+        Variable("n").in_range(1, "K"),
+        Variable("u").eq_("m"),
+        Variable("v").eq_("n"),
     ).do(
         While("u \\= 0").do(
             If("u < v").then(

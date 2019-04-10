@@ -7,17 +7,17 @@ from pluscal.ast.statements import Either, Print, Stmt
 
 
 def test_either() -> None:
-    ast = Either(
-        Stmt(Print(Expr("foo"))),
-        or_=[
-            [
-                Stmt(Print(Expr("bar"))),
-            ],
-            [
-                Stmt(Print(Expr("baz"))),
-            ],
+    ast = Either([
+        [
+            Stmt(Print(Expr("foo"))),
         ],
-    )
+        [
+            Stmt(Print(Expr("bar"))),
+        ],
+        [
+            Stmt(Print(Expr("baz"))),
+        ],
+    ])
 
     ast.validate()
 

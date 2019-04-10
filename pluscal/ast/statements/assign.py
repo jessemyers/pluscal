@@ -1,45 +1,44 @@
 from dataclasses import dataclass, field
 from typing import Iterable, Sequence, Union
 
-from pluscal.ast.base import Expr, Field, Line, Variable
+from pluscal.ast.base import Expr, Field, Line, Node, Variable
 from pluscal.ast.statements.base import UnlabeledStmt
 
 
 @dataclass(frozen=True)
-class LHS:
+class LHS(Node):
     """
-    LHS ::= Variable
+    LHS ::= <Variable> [ "[" <Expr> [, <Expr]* "]" | . <Field> ]*
 
     """
     name: Variable
-    qualifier: Sequence[Union[Sequence[Expr], Field]] = field(default_factory=tuple)
+    items: Sequence[Union[Sequence[Expr], Field]] = field(default_factory=tuple)
 
     def validate(self) -> None:
         self.name.validate()
 
-        for term in self.qualifier:
-            if isinstance(term, Field):
-                term.validate()
+        for item in self.items:
+            if isinstance(item, Field):
+                item.validate()
             else:
                 expr: Expr
-                for expr in term:
+                for expr in item:
                     expr.validate()
 
     def wrap(self, item: Union[Sequence[Expr], Field]) -> str:
         if isinstance(item, Field):
             return f".{str(item)}"
         else:
-            head, *tail = item
-            rest = ", ".join(str(part) for part in tail)
-            return f"[{str(head)}({rest})]"
+            items = ", ".join(str(part) for part in item)
+            return f"[{items}]"
 
     def __str__(self) -> str:
-        qualifier = "".join(self.wrap(item) for item in self.qualifier)
-        return f"{str(self.name)}{qualifier}"
+        items = "".join(self.wrap(item) for item in self.items)
+        return f"{str(self.name)}{items}"
 
 
 @dataclass(frozen=True)
-class Assignment:
+class Assignment(Node):
     left: LHS
     right: Expr
 

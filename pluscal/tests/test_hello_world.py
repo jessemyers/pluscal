@@ -23,8 +23,8 @@ def test_hello_world() -> None:
     """
     algorithm = Algorithm(
         "hello_world",
-    ).vars(
-        Variable("s", ["Hello", "World!"]),
+    ).declare(
+        Variable("s").in_set("Hello", "World!"),
     ).do(
         Print("s", label="A"),
     )

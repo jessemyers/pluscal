@@ -9,7 +9,8 @@
 
 `PlusCal` is an algorithm language that compiles into a `TLA+` specification. This library defines
 *Python types* that form an abstract syntax tree (AST) of the `PlusCal` P-Syntax grammar as well as
-a *builder* API for fluently constructing algorithms.
+a *builder* API for fluently constructing algorithms. The implementation leans heavily on Python
+`dataclasses` and type-hinting; a type checker (e.g. `mypy`) can be used to validate the grammar.
 
 It is anticipated that this library will be used both by humans and by programs to construct grammatically
 correct specifications and run them through the TLC model checker.
@@ -23,9 +24,25 @@ Install from pip:
 
 Create an algorithm:
 
-    from pluscal.api import Algorithm
+```python
+>>> from pluscal.api import Algorithm, Print, Variable
 
-    # XXX
+>>> algorithm = Algorithm(
+    "hello_world",
+).declare(
+    Variable("s").in_set("Hello", "World!"),
+).do(
+    Print("s", label="A"),
+)
+
+>>> print(algorithm)
+--algorithm hello_world
+variable s \in {"Hello", "World!"};
+begin
+  A:
+    print s;
+end algorithm
+```
 
 
 ## Limitations

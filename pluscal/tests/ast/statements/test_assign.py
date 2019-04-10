@@ -29,7 +29,7 @@ def test_assign_qualifier() -> None:
         Assignment(
             left=LHS(
                 name=Variable("foo"),
-                qualifier=[
+                items=[
                     Field("a"),
                     [
                         Expr("b"),
@@ -47,7 +47,7 @@ def test_assign_qualifier() -> None:
 
     assert_that(
         str(ast),
-        is_(equal_to("foo.a[b(c, d)].e := bar;")),
+        is_(equal_to("foo.a[b, c, d].e := bar;")),
     )
 
 

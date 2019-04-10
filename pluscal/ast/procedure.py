@@ -1,12 +1,12 @@
 from dataclasses import dataclass, field
 from typing import Iterable, Optional, Sequence
 
-from pluscal.ast.base import Base, Expr, Line, Name, Variable
+from pluscal.ast.base import Base, Expr, Line, Name, Node, Variable
 from pluscal.ast.statements import AlgorithmBody
 
 
 @dataclass(frozen=True)
-class PVarDecl:
+class PVarDecl(Node):
     """
     PVarDecl ::= <Variable> [= <Expr>]?
 

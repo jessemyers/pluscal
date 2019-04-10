@@ -6,8 +6,20 @@ from dataclasses import dataclass
 from typing import Iterable
 
 
+class Node:
+    """
+    An AST node.
+
+    """
+    def validate(self) -> None:
+        raise NotImplementedError("validate")
+
+    def __str__(self) -> str:
+        raise NotImplementedError("validate")
+
+
 @dataclass(frozen=True)
-class Expr:
+class Expr(Node):
     """
     Expr ::= A TLA+ expression not containing a PlusCal reserved word or symbol.
 
@@ -22,7 +34,7 @@ class Expr:
 
 
 @dataclass(frozen=True)
-class Field:
+class Field(Node):
     """
     Field ::= A TLA+ record-component label.
 
@@ -37,7 +49,7 @@ class Field:
 
 
 @dataclass(frozen=True)
-class Label:
+class Label(Node):
     """
     Label := A TLA+ identifier that is not a PlusCal reserved word and is not Done or Error.
 
@@ -53,7 +65,7 @@ class Label:
 
 
 @dataclass(frozen=True)
-class Name:
+class Name(Node):
     """
     Name := A TLA+ identifier that is not a PlusCal reserved word
 
@@ -68,7 +80,7 @@ class Name:
 
 
 @dataclass(frozen=True)
-class Variable:
+class Variable(Node):
     """
     Name := A TLA+ identifier that is not a PlusCal reserved word and is not pc, stack, or self .
 
@@ -95,16 +107,13 @@ class Line:
         return f"{' ' * self.indent}{self.text}"
 
 
-class Base:
+class Base(Node):
     """
-    A base class for something that is renderable as PlusCal.
+    A base class for something that is renderable as lines of PlusCal.
 
     """
     def render(self, indent: int = 0) -> Iterable[Line]:
         raise NotImplementedError("render")
-
-    def validate(self) -> None:
-        raise NotImplementedError("validate")
 
     def __str__(self) -> str:
         return "\n".join(str(line) for line in self.render())

@@ -1,16 +1,17 @@
 from dataclasses import dataclass
-from typing import Optional
 
-from pluscal.ast import Expr, Label, Print, Stmt
+from pluscal.ast import Expr, Print, Stmt
+from pluscal.builder.base import Builder
+from pluscal.builder.sources import LabelSource, to_label
 
 
 @dataclass
-class PrintBuilder:
+class PrintBuilder(Builder[Stmt]):
     value: str
-    label: Optional[str] = None
+    label: LabelSource = None
 
-    def __call__(self) -> Stmt:
+    def build(self) -> Stmt:
         return Stmt(
-            label=Label(self.label) if self.label is not None else None,
+            label=to_label(self.label),
             value=Print(Expr(self.value)),
         )

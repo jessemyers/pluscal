@@ -11,24 +11,19 @@ class Either(UnlabeledStmt):
     Either ::= either <Stmt> [or <Stmt>+]+ end either ;
 
     """
-    initial: Stmt
-    or_: Sequence[Sequence[Stmt]]
+    items: Sequence[Sequence[Stmt]]
 
     def render(self, indent: int = 0) -> Iterable[Line]:
-        yield Line("either", indent)
-        yield from self.initial.render(indent + 2)
-
-        for item in self.or_:
-            yield Line("or", indent)
-            for statement in item:
+        for index, statements in enumerate(self.items):
+            yield Line("or" if index else "either", indent)
+            for statement in statements:
                 yield from statement.render(indent + 2)
 
         yield Line("end either;", indent)
 
     def validate(self) -> None:
-        self.initial.validate()
-
-        for item in self.or_:
-            assert item
-            for statement in item:
+        assert self.items
+        for statements in self.items:
+            assert statements
+            for statement in statements:
                 statement.validate()

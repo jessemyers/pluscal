@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from enum import Enum, unique
 from typing import Iterable, Optional, Sequence, Tuple
 
-from pluscal.ast.base import Base, Expr, Line, Variable
+from pluscal.ast.base import Base, Expr, Line, Node, Variable
 
 
 @unique
@@ -15,7 +15,7 @@ class DeclType(Enum):
 
 
 @dataclass(frozen=True)
-class VarDecl:
+class VarDecl(Node):
     """
     VarDecl ::= <Variable> [[= | \\in] <Expr>? [;|,]
 
@@ -23,17 +23,17 @@ class VarDecl:
     name: Variable
     value: Optional[Tuple[DeclType, Expr]] = None
 
-    def validate(self) -> None:
-        self.name.validate()
-        if self.value is not None:
-            _, expr = self.value
-            expr.validate()
-
     def __str__(self) -> str:
         if self.value is not None:
             return f"{str(self.name)} {str(self.value[0])} {str(self.value[1])}"
         else:
             return str(self.name)
+
+    def validate(self) -> None:
+        self.name.validate()
+        if self.value is not None:
+            _, expr = self.value
+            expr.validate()
 
 
 @dataclass(frozen=True)

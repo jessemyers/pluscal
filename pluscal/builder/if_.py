@@ -1,35 +1,44 @@
 from dataclasses import dataclass, field
-from typing import Callable, Optional
+from typing import List, Tuple
 
-from pluscal.ast import Expr, If, Label, Skip, Stmt
+from pluscal.ast import Expr, If, Stmt
+from pluscal.builder.base import Builder
+from pluscal.builder.sources import LabelSource, StatementSource, to_label, to_statement
 
 
 @dataclass
-class IfBuilder:
+class IfBuilder(Builder[Stmt]):
     condition: str
-    then_: Stmt = field(default_factory=lambda: Stmt(Skip()))
-    # XXX elsif
-    otherwise_: Optional[Stmt] = None
-    label: Optional[str] = None
+    statements: List[Stmt] = field(default_factory=list)
+    elsif_: List[Tuple[str, List[Stmt]]] = field(default_factory=list)
+    otherwise: List[Stmt] = field(default_factory=list)
+    label: LabelSource = None
 
-    def __call__(self) -> Stmt:
+    def build(self) -> Stmt:
         return Stmt(
-            label=Label(self.label) if self.label is not None else None,
+            label=to_label(self.label),
             value=If(
                 condition=Expr(self.condition),
-                then=[
-                    self.then_,
+                then=self.statements,
+                elsif=[
+                    (
+                        Expr(condition),
+                        statements,
+                    )
+                    for condition, statements in self.elsif_
                 ],
-                else_=[
-                    self.otherwise_,
-                ] if self.otherwise_ else None,
+                else_=self.otherwise if self.otherwise else None,
             ),
         )
 
-    def then(self, value: Callable[[], Stmt]) -> "IfBuilder":
-        self.then_ = value()
+    def then(self, *args: StatementSource) -> "IfBuilder":
+        self.statements.extend(to_statement(arg) for arg in args)
         return self
 
-    def else_(self, value: Callable[[], Stmt]) -> "IfBuilder":
-        self.otherwise_ = value()
+    def elsif(self, condition: str, *args: StatementSource) -> "IfBuilder":
+        self.elsif_.append((condition, [to_statement(arg) for arg in args]))
+        return self
+
+    def else_(self, *args: StatementSource) -> "IfBuilder":
+        self.otherwise.extend(to_statement(arg) for arg in args)
         return self
