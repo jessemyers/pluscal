@@ -2,8 +2,8 @@ from dataclasses import dataclass, field
 from typing import List, Tuple, Union
 
 from pluscal.ast import LHS, Assign, Assignment, Expr, Field, Stmt, Variable
-from pluscal.builder.base import Builder
-from pluscal.builder.sources import LabelSource, LHSSource, to_label, to_lhs
+from pluscal.builders.base import Builder
+from pluscal.builders.source import LabelSource, LHSSource, to_label, to_lhs
 
 
 @dataclass

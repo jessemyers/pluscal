@@ -80,3 +80,16 @@ class Procedure(Base):
             self.variables.validate()
 
         self.body.validate()
+
+
+@dataclass(frozen=True)
+class Procedures(Base):
+    items: Sequence[Procedure] = field(default_factory=tuple)
+
+    def render(self, indent: int = 0) -> Iterable[Line]:
+        for item in self.items:
+            yield from item.render(indent)
+
+    def validate(self) -> None:
+        for item in self.items:
+            item.validate()

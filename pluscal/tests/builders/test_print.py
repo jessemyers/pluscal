@@ -1,6 +1,6 @@
 from hamcrest import assert_that, equal_to, is_
 
-from pluscal.builder.print_ import PrintBuilder
+from pluscal.builders.print_ import PrintBuilder
 
 
 class TestPrintBuilder:

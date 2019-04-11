@@ -1,13 +1,13 @@
-from dataclasses import dataclass, field
-from typing import Iterable, Optional, Sequence
+from dataclasses import dataclass
+from typing import Iterable, Optional, Union
 
 from pluscal.ast.base import Base, Line, Name
-from pluscal.ast.definitions import Definitions
-from pluscal.ast.macro import Macro
-from pluscal.ast.procedure import Procedure
-from pluscal.ast.process import Process
+from pluscal.ast.definition import Definitions
+from pluscal.ast.macro import Macros
+from pluscal.ast.procedure import Procedures
+from pluscal.ast.process import Processes
 from pluscal.ast.statements import AlgorithmBody
-from pluscal.ast.variables import VarDecls
+from pluscal.ast.variable import VarDecls
 
 
 @dataclass(frozen=True)
@@ -23,12 +23,12 @@ class Algorithm(Base):
 
     """
     name: Name
-    body: AlgorithmBody
+    body: Union[AlgorithmBody, Processes]
     fair: bool = False
     variables: Optional[VarDecls] = None
     definitions: Optional[Definitions] = None
-    macros: Sequence[Macro] = field(default_factory=tuple)
-    procedures: Sequence[Procedure] = field(default_factory=tuple)
+    macros: Optional[Macros] = None
+    procedures: Optional[Procedures] = None
 
     def render(self, indent: int = 0) -> Iterable[Line]:
         algorithm = "fair algorithm" if self.fair else "algorithm"
@@ -40,27 +40,13 @@ class Algorithm(Base):
         if self.definitions:
             yield from self.definitions.render(indent)
 
-        yield from (
-            line
-            for macro in self.macros
-            for line in macro.render(indent)
-        )
+        if self.macros:
+            yield from self.macros.render(indent)
 
-        yield from (
-            line
-            for procedure in self.procedures
-            for line in procedure.render(indent)
-        )
+        if self.procedures:
+            yield from self.procedures.render(indent)
 
-        if isinstance(self.body, AlgorithmBody):
-            yield from self.body.render(indent)
-        else:
-            process: Process
-            yield from (
-                line
-                for process in self.body
-                for line in process.render(indent)
-            )
+        yield from self.body.render(indent)
 
         yield Line("end algorithm", indent)
 
@@ -73,15 +59,10 @@ class Algorithm(Base):
         if self.definitions:
             self.definitions.validate()
 
-        for macro in self.macros:
-            macro.validate()
+        if self.macros:
+            self.macros.validate()
 
-        for procedure in self.procedures:
-            procedure.validate()
+        if self.procedures:
+            self.procedures.validate()
 
-        if isinstance(self.body, AlgorithmBody):
-            self.body.validate()
-        else:
-            process: Process
-            for process in self.body:
-                process.validate()
+        self.body.validate()

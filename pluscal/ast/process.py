@@ -1,9 +1,9 @@
 from dataclasses import dataclass
-from typing import Iterable, Optional
+from typing import Iterable, Optional, Sequence
 
 from pluscal.ast.base import Base, Expr, Line, Name
 from pluscal.ast.statements import AlgorithmBody
-from pluscal.ast.variables import DeclType, VarDecls
+from pluscal.ast.variable import DeclType, VarDecls
 
 
 @dataclass(frozen=True)
@@ -15,7 +15,7 @@ class Process(Base):
                 end process
 
     """
-    # XXX fair
+    # XXX need to implement fairness/strong fairness
     name: Name
     type: DeclType
     value: Expr
@@ -39,3 +39,19 @@ class Process(Base):
             self.variables.validate()
 
         self.body.validate()
+
+
+@dataclass
+class Processes(Base):
+    items: Sequence[Process]
+
+    def render(self, indent: int = 0) -> Iterable[Line]:
+        for index, item in enumerate(self.items):
+            if index:
+                yield Line("", indent)
+            yield from item.render(indent)
+
+    def validate(self) -> None:
+        assert self.items
+        for item in self.items:
+            item.validate()

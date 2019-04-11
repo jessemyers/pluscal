@@ -1,6 +1,6 @@
 from hamcrest import assert_that, equal_to, is_
 
-from pluscal.builder.assert_ import AssertBuilder
+from pluscal.builders.assert_ import AssertBuilder
 
 
 class TestAssertBuilder:

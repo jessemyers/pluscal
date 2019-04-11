@@ -1,6 +1,6 @@
 from hamcrest import assert_that, equal_to, is_
 
-from pluscal.builder.goto import GotoBuilder
+from pluscal.builders.goto import GotoBuilder
 
 
 class TestGotoBuilder:

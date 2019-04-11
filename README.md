@@ -55,4 +55,8 @@ This library is not complete. Some known limitations include:
  2. The validation logic does not express the full nuances of `PlusCal`, especially as it relates to
     label placement.
 
- 3. Some language features, especially as related to fairness, are not yet implemented.
+    See section `3.7` of the PlusCal manual.
+
+ 3. Some of the fainess operations are not yet yet implemented.
+
+    See section `4.6` of the PlusCal manual.

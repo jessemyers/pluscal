@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import List
 
 from pluscal.ast import Stmt, VarDecl, With
-from pluscal.builder.base import Builder
-from pluscal.builder.sources import LabelSource, StatementSource, VariableSource, to_label, to_statement, to_variable
+from pluscal.builders.base import Builder
+from pluscal.builders.source import LabelSource, StatementSource, VariableSource, to_label, to_statement, to_variable
 
 
 @dataclass(init=False)

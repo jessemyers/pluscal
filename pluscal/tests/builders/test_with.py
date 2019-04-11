@@ -3,8 +3,8 @@ from textwrap import dedent
 from hamcrest import assert_that, equal_to, is_
 
 from pluscal.ast import Skip
-from pluscal.builder.variable import VariableBuilder
-from pluscal.builder.with_ import WithBuilder
+from pluscal.builders.variable import VariableBuilder
+from pluscal.builders.with_ import WithBuilder
 
 
 class TestWithBuilder:

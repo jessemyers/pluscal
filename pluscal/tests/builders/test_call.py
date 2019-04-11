@@ -1,6 +1,6 @@
 from hamcrest import assert_that, equal_to, is_
 
-from pluscal.builder.call import CallBuilder
+from pluscal.builders.call import CallBuilder
 
 
 class TestCallBuilder:

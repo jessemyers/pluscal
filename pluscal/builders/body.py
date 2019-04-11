@@ -2,13 +2,16 @@ from dataclasses import dataclass, field
 from typing import List
 
 from pluscal.ast import AlgorithmBody, Stmt
-from pluscal.builder.base import Builder
-from pluscal.builder.sources import StatementSource, to_statement
+from pluscal.builders.base import Builder
+from pluscal.builders.source import StatementSource, to_statement
 
 
 @dataclass
 class BodyBuilder(Builder[AlgorithmBody]):
     items: List[Stmt] = field(default_factory=list)
+
+    def __bool__(self) -> bool:
+        return bool(self.items)
 
     def build(self) -> AlgorithmBody:
         return AlgorithmBody(

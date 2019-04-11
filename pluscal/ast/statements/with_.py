@@ -3,7 +3,7 @@ from typing import Iterable, Sequence
 
 from pluscal.ast.base import Line
 from pluscal.ast.statements.base import Stmt, UnlabeledStmt
-from pluscal.ast.variables import VarDecl
+from pluscal.ast.variable import VarDecl
 
 
 @dataclass(frozen=True)

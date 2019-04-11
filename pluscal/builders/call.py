@@ -2,8 +2,8 @@ from dataclasses import dataclass, field
 from typing import List
 
 from pluscal.ast import Call, Expr, Name, Stmt
-from pluscal.builder.base import Builder
-from pluscal.builder.sources import LabelSource, to_label
+from pluscal.builders.base import Builder
+from pluscal.builders.source import LabelSource, to_label
 
 
 @dataclass

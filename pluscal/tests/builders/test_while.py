@@ -3,7 +3,7 @@ from textwrap import dedent
 from hamcrest import assert_that, equal_to, is_
 
 from pluscal.ast import Skip
-from pluscal.builder.while_ import WhileBuilder
+from pluscal.builders.while_ import WhileBuilder
 
 
 class TestWhileBuilder:

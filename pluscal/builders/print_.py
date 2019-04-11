@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
 from pluscal.ast import Expr, Print, Stmt
-from pluscal.builder.base import Builder
-from pluscal.builder.sources import LabelSource, to_label
+from pluscal.builders.base import Builder
+from pluscal.builders.source import LabelSource, to_label
 
 
 @dataclass

@@ -1,6 +1,6 @@
 from hamcrest import assert_that, equal_to, is_
 
-from pluscal.builder.assign import AssignBuilder, LHSBuilder
+from pluscal.builders.assign import AssignBuilder, LHSBuilder
 
 
 class TestLHSBuilder:
