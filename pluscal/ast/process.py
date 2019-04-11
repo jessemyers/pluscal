@@ -15,7 +15,7 @@ class Process(Base):
                 end process
 
     """
-    # XXX fair
+    # XXX need to implement fairness/strong fairness
     name: Name
     type: DeclType
     value: Expr

@@ -22,7 +22,7 @@ class Stmt(Base):
     Stmt ::= [<Label> : [+|-]?]? <UnlabeledStmt>
 
     """
-    # XXX +/-
+    # XXX label should be extended to allow fairness +/-
     value: UnlabeledStmt
     label: Optional[Label] = None
 
