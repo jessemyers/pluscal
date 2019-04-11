@@ -1,6 +1,6 @@
 from pluscal.builders.algorithm import AlgorithmBuilder
 from pluscal.builders.assert_ import AssertBuilder
-from pluscal.builders.assign import AssignBuilder
+from pluscal.builders.assign import AssignBuilder, LHSBuilder
 from pluscal.builders.await_ import AwaitBuilder
 from pluscal.builders.call import CallBuilder, MacroCallBuilder
 from pluscal.builders.either import EitherBuilder
@@ -24,6 +24,7 @@ __all__ = [
     "EitherBuilder",
     "GotoBuilder",
     "IfBuilder",
+    "LHSBuilder",
     "MacroBuilder",
     "MacroCallBuilder",
     "PrintBuilder",

@@ -26,7 +26,7 @@ ALGORITHM = dedent("""\
         assert ~Cyclic(ll);
         goto Done;
       end if;
-    end macro
+    end macro;
 
     begin
       while TRUE do

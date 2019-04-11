@@ -19,7 +19,7 @@ def test_macro() -> None:
         macro foo(bar)
         begin
           skip;
-        end macro""")))
+        end macro;""")))
     )
 
 
@@ -35,5 +35,5 @@ def test_macros() -> None:
         macro foo()
         begin
           skip;
-        end macro""")))
+        end macro;""")))
     )

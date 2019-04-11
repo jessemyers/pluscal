@@ -100,7 +100,7 @@ class Line:
     A line of PlusCal output.
 
     """
-    text: str
+    text: str = ""
     indent: int = 0
 
     def __str__(self) -> str:

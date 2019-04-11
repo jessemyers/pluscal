@@ -22,7 +22,7 @@ def test_procedure() -> None:
         variable baz = qox;
         begin
           skip;
-        end procedure""")))
+        end procedure;""")))
     )
 
 
@@ -36,8 +36,9 @@ def test_procedures() -> None:
     assert_that(
         str(builder),
         is_(equal_to(dedent("""\
+
         procedure foo()
         begin
           skip;
-        end procedure""")))
+        end procedure;""")))
     )

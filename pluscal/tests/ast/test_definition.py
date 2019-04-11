@@ -17,7 +17,8 @@ def test_definitions() -> None:
     assert_that(
         str(ast),
         is_(equal_to(dedent("""\
+
         define
           Foo == bar >= 0
-        end define"""))),
+        end define;"""))),
     )

@@ -52,7 +52,7 @@ class Procedure(Base):
     Procedure ::= procedure <Name> ( [<Variable> [, <Variable>]*]?)
                   <PVarDecls>?
                   <AlgorithmBody>
-                  end procedure
+                  end procedure [;]?
 
     """
     name: Name
@@ -68,7 +68,7 @@ class Procedure(Base):
             yield Line(str(self.variables), indent)
 
         yield from self.body.render(indent)
-        yield Line("end procedure", indent)
+        yield Line("end procedure;", indent)
 
     def validate(self) -> None:
         self.name.validate()
@@ -88,6 +88,7 @@ class Procedures(Base):
 
     def render(self, indent: int = 0) -> Iterable[Line]:
         for item in self.items:
+            yield Line()
             yield from item.render(indent)
 
     def validate(self) -> None:

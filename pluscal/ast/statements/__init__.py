@@ -5,7 +5,7 @@ from pluscal.ast.statements.base import AlgorithmBody, Stmt, UnlabeledStmt
 from pluscal.ast.statements.call import Call, MacroCall
 from pluscal.ast.statements.either import Either
 from pluscal.ast.statements.goto import Goto
-from pluscal.ast.statements.if_ import If
+from pluscal.ast.statements.if_ import ElsifClause, If, IfClause
 from pluscal.ast.statements.print_ import Print
 from pluscal.ast.statements.return_ import Return
 from pluscal.ast.statements.skip import Skip
@@ -22,8 +22,10 @@ __all__ = [
     "Await",
     "Call",
     "Either",
+    "ElsifClause",
     "Goto",
     "If",
+    "IfClause",
     "MacroCall",
     "Print",
     "Return",

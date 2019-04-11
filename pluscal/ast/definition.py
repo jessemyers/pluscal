@@ -18,13 +18,14 @@ class Definitions(Base):
     items: Sequence[Def]
 
     def render(self, indent: int = 0) -> Iterable[Line]:
+        yield Line()
         yield Line("define", indent)
         yield from (
             Line(line, indent + 2)
             for item in self.items
             for line in item.splitlines()
         )
-        yield Line("end define", indent)
+        yield Line("end define;", indent)
 
     def validate(self) -> None:
         assert self.items

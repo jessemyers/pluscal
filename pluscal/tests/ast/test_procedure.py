@@ -43,5 +43,5 @@ def test_procedure() -> None:
           Foo:
             assert bar \\= baz;
           return;
-        end procedure"""))),
+        end procedure;"""))),
     )

@@ -11,9 +11,10 @@ def test_definitions() -> None:
     assert_that(
         str(builder),
         is_(equal_to(dedent("""\
+
         define
           foo
-        end define""")))
+        end define;""")))
     )
 
 

@@ -1,4 +1,4 @@
-from pluscal.ast import Return, Skip
+from pluscal.ast import DeclType, Return, Skip
 from pluscal.builders import (
     AlgorithmBuilder as Algorithm,
     AssertBuilder as Assert,
@@ -8,6 +8,7 @@ from pluscal.builders import (
     EitherBuilder as Either,
     GotoBuilder as Goto,
     IfBuilder as If,
+    LHSBuilder as LHS,
     MacroBuilder as Macro,
     MacroCallBuilder as MacroCall,
     PrintBuilder as Print,
@@ -20,7 +21,14 @@ from pluscal.builders import (
 )
 
 
+EQUALS = DeclType.EQUALS
+IN = DeclType.IN
+
+
 __all__ = [
+    "EQUALS",
+    "IN",
+    "LHS",
     "Algorithm",
     "Assert",
     "Assign",

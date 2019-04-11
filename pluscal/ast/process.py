@@ -12,7 +12,7 @@ class Process(Base):
     Process ::= [fair [+]?]? process <Name> [= | \\in] <Expr>
                 <VarDecls>?
                 <AlgorithmBody>
-                end process
+                end process [;]?
 
     """
     # XXX need to implement fairness/strong fairness
@@ -29,7 +29,7 @@ class Process(Base):
             yield from self.variables.render(indent)
 
         yield from self.body.render(indent)
-        yield Line("end process", indent)
+        yield Line("end process;", indent)
 
     def validate(self) -> None:
         self.name.validate()
@@ -47,7 +47,7 @@ class Processes(Base):
 
     def render(self, indent: int = 0) -> Iterable[Line]:
         for index, item in enumerate(self.items):
-            yield Line("", 0)
+            yield Line()
             yield from item.render(indent)
 
     def validate(self) -> None:

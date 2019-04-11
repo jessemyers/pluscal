@@ -47,11 +47,9 @@ class TestIfBuilder:
             "foo",
         ).then(
             Skip(),
-        ).elsif(
-            "bar",
+        ).elsif("bar").then(
             Skip(),
-        ).elsif(
-            "baz",
+        ).elsif("baz").then(
             Skip(),
         )
 
