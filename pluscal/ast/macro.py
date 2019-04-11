@@ -39,6 +39,7 @@ class Macros(Base):
 
     def render(self, indent: int = 0) -> Iterable[Line]:
         for item in self.items:
+            yield Line("", 0)
             yield from item.render(indent)
 
     def validate(self) -> None:

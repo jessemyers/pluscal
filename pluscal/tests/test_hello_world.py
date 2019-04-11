@@ -8,6 +8,7 @@ from pluscal.api import Algorithm, Print, Variable
 ALGORITHM = dedent("""\
     --algorithm hello_world
     variable s \\in {"Hello", "World!"};
+
     begin
       A:
         print s;

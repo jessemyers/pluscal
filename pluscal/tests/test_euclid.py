@@ -8,6 +8,7 @@ from pluscal.api import Algorithm, Assert, Assign, If, Variable, While
 ALGORITHM = dedent("""\
     --algorithm EuclidSedgewick
     variables m \\in 1..K, n \\in 1..K, u = m, v = n;
+
     begin
       while u \\= 0 do
         if u < v then

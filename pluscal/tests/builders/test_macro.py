@@ -31,6 +31,7 @@ def test_macros() -> None:
     assert_that(
         str(builder),
         is_(equal_to(dedent("""\
+
         macro foo()
         begin
           skip;

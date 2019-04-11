@@ -47,8 +47,7 @@ class Processes(Base):
 
     def render(self, indent: int = 0) -> Iterable[Line]:
         for index, item in enumerate(self.items):
-            if index:
-                yield Line("", indent)
+            yield Line("", 0)
             yield from item.render(indent)
 
     def validate(self) -> None:

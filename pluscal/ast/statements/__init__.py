@@ -2,7 +2,7 @@ from pluscal.ast.statements.assert_ import Assert
 from pluscal.ast.statements.assign import LHS, Assign, Assignment
 from pluscal.ast.statements.await_ import Await
 from pluscal.ast.statements.base import AlgorithmBody, Stmt, UnlabeledStmt
-from pluscal.ast.statements.call import Call
+from pluscal.ast.statements.call import Call, MacroCall
 from pluscal.ast.statements.either import Either
 from pluscal.ast.statements.goto import Goto
 from pluscal.ast.statements.if_ import If
@@ -24,6 +24,7 @@ __all__ = [
     "Either",
     "Goto",
     "If",
+    "MacroCall",
     "Print",
     "Return",
     "Skip",

@@ -38,6 +38,7 @@ def test_processes_builder():
     assert_that(
         str(builder),
         is_(equal_to(dedent("""\
+
             process foo = foo
             begin
               skip;
