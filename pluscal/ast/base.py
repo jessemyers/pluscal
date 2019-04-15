@@ -57,8 +57,8 @@ class Label(Node):
     value: str
 
     def validate(self) -> None:
+        # NB: when using Label with Goto, it can be Done or Error, so we can't validate that here
         assert self.value
-        assert self.value not in ("Done", "Error")
 
     def __str__(self) -> str:
         return self.value
@@ -100,7 +100,7 @@ class Line:
     A line of PlusCal output.
 
     """
-    text: str
+    text: str = ""
     indent: int = 0
 
     def __str__(self) -> str:

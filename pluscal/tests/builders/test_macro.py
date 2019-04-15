@@ -19,7 +19,7 @@ def test_macro() -> None:
         macro foo(bar)
         begin
           skip;
-        end macro""")))
+        end macro;""")))
     )
 
 
@@ -31,8 +31,9 @@ def test_macros() -> None:
     assert_that(
         str(builder),
         is_(equal_to(dedent("""\
+
         macro foo()
         begin
           skip;
-        end macro""")))
+        end macro;""")))
     )

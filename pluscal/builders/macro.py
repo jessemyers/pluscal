@@ -20,6 +20,9 @@ class MacroBuilder(Builder[Macro]):
             body=self.body.build(),
         )
 
+    def __call__(self, *args: str) -> "MacroBuilder":
+        return self.args(*args)
+
     def args(self, *args: str) -> "MacroBuilder":
         self.args_.extend(Variable(arg) for arg in args)
         return self

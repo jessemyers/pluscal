@@ -46,6 +46,9 @@ class Algorithm(Base):
         if self.procedures:
             yield from self.procedures.render(indent)
 
+        if isinstance(self.body, AlgorithmBody):
+            yield Line()
+
         yield from self.body.render(indent)
 
         yield Line("end algorithm", indent)

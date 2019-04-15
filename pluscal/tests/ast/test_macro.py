@@ -29,5 +29,5 @@ def test_macro() -> None:
         macro foo(bar, baz)
         begin
           assert bar \\= baz;
-        end macro"""))),
+        end macro;"""))),
     )

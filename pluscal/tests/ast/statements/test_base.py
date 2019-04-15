@@ -7,10 +7,10 @@ from pluscal.ast.statements import Print, Stmt, UnlabeledStmt
 
 
 def test_unlabeled_stmt() -> None:
-    # Assert, Assign, Await, Call, Either, Go, If, Print, Return, Skip, While, With
+    # Assert, Assign, Await, Call, Either, Go, If, MacroCall, Print, Return, Skip, While, With
     assert_that(
         UnlabeledStmt.__subclasses__(),
-        has_length(12),
+        has_length(13),
     )
 
 

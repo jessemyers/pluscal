@@ -6,21 +6,34 @@ from pluscal.ast.statements.base import UnlabeledStmt
 
 
 @dataclass(frozen=True)
-class Call(UnlabeledStmt):
-    """
-    Call ::= call <MacroCall>
-
-    MacroCall ::= <Name> ( [<Expr>, [, <Expr>]*]? ) ;
-
-    """
+class AbstractCall:
     name: Name
     args: Sequence[Expr]
 
-    def render(self, indent: int = 0) -> Iterable[Line]:
+    @property
+    def value(self) -> str:
         args = ", ".join(str(arg) for arg in self.args)
-        yield Line(f"call {str(self.name)}({args});", indent)
+        return f"{str(self.name)}({args});"
 
     def validate(self) -> None:
         self.name.validate()
         for arg in self.args:
             arg.validate()
+
+
+class Call(AbstractCall, UnlabeledStmt):
+    """
+    Call ::= call <MacroCall>
+
+    """
+    def render(self, indent: int = 0) -> Iterable[Line]:
+        yield Line(f"call {self.value}", indent)
+
+
+class MacroCall(AbstractCall, UnlabeledStmt):
+    """
+    MacroCall ::= <Name> ( [<Expr>, [, <Expr>]*]? ) ;
+
+    """
+    def render(self, indent: int = 0) -> Iterable[Line]:
+        yield Line(self.value, indent)

@@ -10,7 +10,7 @@ class Macro(Base):
     """
     Macro ::= macro <Name> ( <Variable> [, <Variable>]* )
               <AlgorithmBody>
-              end macro
+              end macro [;]?
 
     """
     name: Name
@@ -19,10 +19,10 @@ class Macro(Base):
 
     def render(self, indent: int = 0) -> Iterable[Line]:
         args = ", ".join(str(arg) for arg in self.args)
-        yield Line(f"macro {str(self.name)}({args})", indent)
 
+        yield Line(f"macro {str(self.name)}({args})", indent)
         yield from self.body.render(indent)
-        yield Line("end macro", indent)
+        yield Line("end macro;", indent)
 
     def validate(self) -> None:
         self.name.validate()
@@ -39,6 +39,7 @@ class Macros(Base):
 
     def render(self, indent: int = 0) -> Iterable[Line]:
         for item in self.items:
+            yield Line()
             yield from item.render(indent)
 
     def validate(self) -> None:

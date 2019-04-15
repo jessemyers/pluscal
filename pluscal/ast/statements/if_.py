@@ -1,8 +1,47 @@
 from dataclasses import dataclass, field
-from typing import Iterable, Optional, Sequence, Tuple
+from typing import Iterable, Optional, Sequence
 
-from pluscal.ast.base import Expr, Line
+from pluscal.ast.base import Expr, Line, Node
 from pluscal.ast.statements.base import Stmt, UnlabeledStmt
+
+
+Statements = Sequence[Stmt]
+
+
+@dataclass(frozen=True)
+class Clause(Node):
+    condition: Expr
+    statements: Statements
+
+    @property
+    def clause_type(self) -> str:
+        raise NotImplementedError()
+
+    def render(self, indent: int = 0) -> Iterable[Line]:
+        yield Line(f"{self.clause_type} {str(self.condition)} then", indent)
+        for statement in self.statements:
+            yield from statement.render(indent + 2)
+
+    def validate(self) -> None:
+        self.condition.validate()
+
+        assert self.statements
+        for statement in self.statements:
+            statement.validate()
+
+
+class IfClause(Clause):
+
+    @property
+    def clause_type(self) -> str:
+        return "if"
+
+
+class ElsifClause(Clause):
+
+    @property
+    def clause_type(self) -> str:
+        return "elsif"
 
 
 @dataclass(frozen=True)
@@ -14,20 +53,15 @@ class If(UnlabeledStmt):
             end if;
 
     """
-    condition: Expr
-    then: Sequence[Stmt]
-    elsif: Sequence[Tuple[Expr, Sequence[Stmt]]] = field(default_factory=list)
-    else_: Optional[Sequence[Stmt]] = None
+    if_clause: IfClause
+    elsif_clauses: Sequence[ElsifClause] = field(default_factory=tuple)
+    else_: Optional[Statements] = None
 
     def render(self, indent: int = 0) -> Iterable[Line]:
-        yield Line(f"if {str(self.condition)} then", indent)
-        for statement in self.then:
-            yield from statement.render(indent + 2)
+        yield from self.if_clause.render(indent)
 
-        for condition, statements in self.elsif:
-            yield Line(f"elsif {str(condition)} then", indent)
-            for statement in statements:
-                yield from statement.render(indent + 2)
+        for elsif_clause in self.elsif_clauses:
+            yield from elsif_clause.render(indent)
 
         if self.else_:
             yield Line("else", indent)
@@ -37,16 +71,10 @@ class If(UnlabeledStmt):
         yield Line(f"end if;", indent)
 
     def validate(self) -> None:
-        self.condition.validate()
+        self.if_clause.validate()
 
-        assert self.then
-        for statement in self.then:
-            statement.validate()
-
-        for _, statements in self.elsif:
-            assert statements
-            for statement in statements:
-                statement.validate()
+        for elsif_clause in self.elsif_clauses:
+            elsif_clause.validate()
 
         if self.else_ is not None:
             assert self.else_

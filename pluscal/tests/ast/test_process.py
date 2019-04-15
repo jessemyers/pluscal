@@ -51,5 +51,5 @@ def test_process() -> None:
             while TRUE do
               skip;
             end while;
-        end process"""))),
+        end process;"""))),
     )

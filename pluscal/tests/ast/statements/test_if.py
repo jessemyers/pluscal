@@ -3,15 +3,17 @@ from textwrap import dedent
 from hamcrest import assert_that, equal_to, is_
 
 from pluscal.ast.base import Expr
-from pluscal.ast.statements import If, Print, Stmt
+from pluscal.ast.statements import ElsifClause, If, IfClause, Print, Stmt
 
 
 def test_if() -> None:
     ast = If(
-        condition=Expr("foo"),
-        then=[
-            Stmt(Print(Expr("bar"))),
-        ],
+        IfClause(
+            Expr("foo"),
+            [
+                Stmt(Print(Expr("bar"))),
+            ],
+        ),
     )
 
     ast.validate()
@@ -27,10 +29,12 @@ def test_if() -> None:
 
 def test_if_else() -> None:
     ast = If(
-        condition=Expr("foo"),
-        then=[
-            Stmt(Print(Expr("bar"))),
-        ],
+        IfClause(
+            Expr("foo"),
+            [
+                Stmt(Print(Expr("bar"))),
+            ],
+        ),
         else_=[
             Stmt(Print(Expr("baz"))),
         ],
@@ -51,12 +55,14 @@ def test_if_else() -> None:
 
 def test_if_elsif() -> None:
     ast = If(
-        condition=Expr("foo"),
-        then=[
-            Stmt(Print(Expr("bar"))),
-        ],
-        elsif=[
-            (
+        IfClause(
+            Expr("foo"),
+            [
+                Stmt(Print(Expr("bar"))),
+            ],
+        ),
+        [
+            ElsifClause(
                 Expr("baz"),
                 [
                     Stmt(Print(Expr("baz"))),
