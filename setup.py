@@ -40,6 +40,7 @@ setup(
             "pip>=19.0.3",
             "setuptools>=40.8.0",
             "twine>=1.13.0",
+            "wheel>=0.33.1",
         ],
         lint=[
             "flake8>=3.7.7",
