@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 
 project = "pluscal"
-version = "0.4.1"
+version = "0.4.2"
 
 
 url = "https://github.com/jessemyers/pluscal"
@@ -40,6 +40,7 @@ setup(
             "pip>=19.0.3",
             "setuptools>=40.8.0",
             "twine>=1.13.0",
+            "wheel>=0.33.1",
         ],
         lint=[
             "flake8>=3.7.7",
