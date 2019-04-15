@@ -65,6 +65,8 @@ jobs:
   release:
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/repo
       - run:
           name: init .pypirc
           command: |
