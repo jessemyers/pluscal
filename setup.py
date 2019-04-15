@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 
 project = "pluscal"
-version = "0.3.0"
+version = "0.4.0"
 
 
 url = "https://github.com/jessemyers/pluscal"
